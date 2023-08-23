@@ -1,33 +1,66 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, Pressable } from "react-native";
 import styles from "./styles.js";
-import { Button } from 'react-native-web';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import app from "../Autenticação/fireBaseConfig/"
+
+//() => navigation.navigate('Home', { num1: Number(num1), num2: Number(num2) })
 
 export default function Login({ navigation }) {
-  const [num1, onChangeNum1] = React.useState('')
-  const [num2, onChangeNum2] = React.useState('')
+
+  const [email, setEmail] = useState()
+  const [password, setPassword] = useState()
+  const auth = getAuth(app);
+
+  const logar = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        navigation.navigate('Imgs', {usuario: user.email})
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log('D:')
+      });
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.mainTxt}>Digite 2 numeros a serem somados</Text>
+
+      <View>
+        <Text style={styles.mainTxt}>Login</Text>
+      </View>
 
       <TextInput
-      style={styles.input}
-      onChangeText={onChangeNum1}
-      placeholder="1º Numero"
+        style={styles.input}
+        onChangeText={setEmail}
+        value={email}
+        placeholder="Type your e-mail"
       />
 
       <TextInput
-      style={styles.input}
-      onChangeText={onChangeNum2}
-      placeholder="2º Numero"
+        style={styles.input}
+        onChangeText={setPassword}
+        value={password}
+        placeholder="Password"
+        secureTextEntry={true}
       />
 
       <Pressable
         style={styles.btn}
-        onPress={() => navigation.navigate('Home', {num1:Number(num1), num2:Number(num2)}) }>
-          <Text style={styles.btnTxt}>
-            Continue
-          </Text>
+        onPress={logar}>
+        <Text style={styles.btnTxt}>
+          Log in
+        </Text>
+      </Pressable>
+
+      <Pressable
+        style={styles.btn}
+        onPress={()=>{navigation.navigate('') }}>
+        <Text style={styles.btnTxt}>
+          Sing up
+        </Text>
       </Pressable>
 
     </View>

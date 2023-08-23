@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     input: {
         borderWidth: 2,
         borderRadius: '10px',
-        padding: '0.5%',
+        padding: '1%',
         margin: '1%'
     },
     btn: {
