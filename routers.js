@@ -1,45 +1,90 @@
-import { NavigationContainer } from "@react-navigation/native"
-import { createStackNavigator } from "@react-navigation/stack"
-import Login from "./pages/1-login"
-import Home from "./pages/2-home";
-import Final from "./pages/3-final"
-import Imgs from "./pages/4-imgs";
-import SingleImage from "./pages/5-singleImage";
-import SingleImage from "./pages/1.2-register";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Login from "./pages/login";
+import Create from "./pages/create";
+import Read from "./pages/read";
+import Update from "./pages/update";
+import Delete from "./pages/delete";
+import Home from "./pages/home";
+import { Feather } from "@expo/vector-icons";
 
-const Stack = createStackNavigator()
+const Pilha = createStackNavigator()
+const Tab = createBottomTabNavigator()
+
+function MyTabs() {
+    return (
+        <Tab.Navigator
+            screenOptions={{
+                tabBarStyle: {
+                    backgroundColor: 'black',
+                    paddingVertical: 1,
+                    borderTopColor: 'transparent',
+                },
+                tabBarActiveBackgroundColor: '#f0f',
+                tabBarInactiveTintColor: '#aaa'
+            }}
+        >
+
+            <Tab.Screen
+                name="Login"
+                component={Login}
+                options={{ headerShown: false }}
+            />
+
+        </Tab.Navigator>
+    )
+}
 
 export default function Routers() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
+    return (
+        <NavigationContainer>
+            <Pilha.Navigator>
 
-        <Stack.Screen
-            name="Login"
-            component={Login}
-        />
+                <Pilha.Screen
+                    name="MyTabs"
+                    component={MyTabs}
+                    options={{ 
+                        headerShown: false,
+                        //tabBarStyle:{display:'none'}
+                        tabBarIcon: ({size, color})=>(
+                            <Feather name="users" size={5} color={"black"}/>
+                        )
+                     }}
+                />
+{/* 
+                <Pilha.Screen
+                    name="Create"
+                    component={Create}
+                    options={{ headerShown: false }}
+                />
 
-        <Stack.Screen
-            name="Home"
-            component={Home} />
 
-        <Stack.Screen
-            name="Final"
-            component={Final} />
+                <Pilha.Screen
+                    name="Read"
+                    component={Read}
+                    options={{ headerShown: false }}
+                />
 
-        <Stack.Screen
-          name="Imgs"
-          component={Imgs} />
+                <Pilha.Screen
+                    name="Update"
+                    component={Update}
+                    options={{ headerShown: false }}
+                />
 
-        <Stack.Screen
-          name="SingleImage"
-          component={SingleImage} />
-        
-        <Stack.Screen
-          name="Register"
-          component={} />
+                <Pilha.Screen
+                    name="Delete"
+                    component={Delete}
+                    options={{ headerShown: false }}
+                />
 
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+                <Pilha.Screen
+                    name="Home"
+                    component={Home}
+                    options={{ headerShown: false }}
+                /> */}
+
+            </Pilha.Navigator>
+        </NavigationContainer>
+    )
 }
